@@ -8,4 +8,7 @@
 В качестве аргументов можно использовать XML:
 ```java Chess --task from-a1-to-b1.xml```
 
+##Установка с помощью Ant
+В {project.dir} запустить ```ant```
+
 Использованы идеи алгоритма Ли https://ru.wikipedia.org/wiki/Алгоритм_Ли
