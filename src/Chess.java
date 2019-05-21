@@ -29,21 +29,38 @@ public class Chess {
 
     private static final int HEIGHT = 8;
 
-    static int[][] pointsWithValues = new int[WIDTH][HEIGHT]; // инициализируем шахматное поле
+    private static int[][] pointsWithValues = new int[WIDTH][HEIGHT]; // инициализируем шахматное
+                                                                      // поле
 
-    static ArrayList<Point> occupiedPoints = new ArrayList<>(); // список занятых клеток
+    public static int[][] getPointsWithValues() {
+        return pointsWithValues;
+    }
 
-    static ArrayList<Point> holes = new ArrayList<>(); // список "дырок"
+    public static void setPointsWithValues(int x, int y, int value) {
+        pointsWithValues[x][y] = value;
+    }
 
-    static String pathXML;
+    public static ArrayList<Point> getOccupiedPoints() {
+        return occupiedPoints;
+    }
 
-    static Point startPoint;
+    public static void setOccupiedPoints(Point point) {
+        Chess.occupiedPoints.add(point);
+    }
 
-    static Point finishPoint;
+    private static ArrayList<Point> occupiedPoints = new ArrayList<>(); // список занятых клеток
 
-    static String pointOne;
+    private static ArrayList<Point> holes = new ArrayList<>(); // список "дырок"
 
-    static String pointTwo;
+    private static String pathXML;
+
+    private static Point startPoint;
+
+    private static Point finishPoint;
+
+    private static String pointOne;
+
+    private static String pointTwo;
 
     public static void main(String[] args)
             throws SAXException, ParserConfigurationException, DocumentException {

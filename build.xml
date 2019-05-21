@@ -6,6 +6,8 @@
 	<property name="lib.dir" value="${basedir}/lib" />
 	<property name="test.dir" value="${basedir}/test" />
 	<property name="jar.name" value="chess.jar" />
+	<taskdef resource="com/puppycrawl/tools/checkstyle/ant/checkstyle-ant-task.properties" 
+		classpath="${lib.dir}/checkstyle-8.20-all.jar"/>
 
 	<path id="compile.classpath">
 		<fileset dir="${lib.dir}">
@@ -17,26 +19,47 @@
 		</fileset>
 	</path>
 	
+	<target name="clean">
+			<delete dir="${classes.dir}"/>
+			<delete dir="${target.dir}"/>
+		</target>
+	
 	<target name="init" depends="clean">
 		<mkdir dir="${classes.dir}"/>
 		<mkdir dir="${target.dir}"/>
 	</target>
 
 	<target name="compile" depends="init">
-		<javac includeantruntime="false" srcdir="${source.dir}" destdir="${classes.dir}" source="1.8" target="1.8" encoding="utf-8">
+		<javac includeantruntime="false" srcdir="${source.dir}" destdir="${classes.dir}" 
+			source="1.8" target="1.8" encoding="utf-8">
 			<classpath refid="compile.classpath" />
 		</javac>
-		<javac includeantruntime="false" srcdir="${test.dir}" destdir="${classes.dir}" source="1.8" target="1.8" encoding="utf-8">
+		<javac includeantruntime="false" srcdir="${test.dir}" destdir="${classes.dir}" 
+			source="1.8" target="1.8" encoding="utf-8">
 			<classpath refid="compile.classpath" />
 		</javac>
 	</target>
 	
-	<target name="clean">
-			<delete dir="${classes.dir}"/>
-			<delete dir="${target.dir}"/>
-		</target>
+	<target name="test" depends="compile">
+		<junit printsummary="on" haltonfailure="yes" fork="true" outputtoformatters="no">
+			<classpath>
+				<path refid="compile.classpath"/>
+				<pathelement location="${classes.dir}"/>
+			</classpath>
+			<formatter type="brief" usefile="false" />
+			<batchtest>
+				<fileset dir="${test.dir}" includes="ChessTest.java" />
+			</batchtest>
+		</junit>
+	</target>
+	
+	<target name="checkstyle" depends="test">
+			<checkstyle config="${source.dir}/js2019_checks.xml" failOnViolation="false">
+				<fileset dir="${source.dir}" includes="**/*.java"/>
+			</checkstyle>
+	</target>
 
-	<target name="package" depends="test">
+	<target name="package" depends="checkstyle">
 		<jar destfile="${target.dir}/${jar.name}" basedir="${classes.dir}">
 			<zipgroupfileset dir="${lib.dir}">
 				<include name="log4j-api-2.11.2.jar"/>
@@ -53,24 +76,13 @@
 		</jar>
 	</target>
 	
-	<target name="run-via-fat-jar">
+	<target name="run">
 	    <java jar="${target.dir}/${jar.name}" fork="true">  
-	        <arg value="a3"/>
+	        <arg value="a1"/>
 	    	<arg value="h8"/>
 	    </java>                  
 	</target>
 	
-	<target name="test" depends="compile">
-		<junit printsummary="on" haltonfailure="yes" fork="true" outputtoformatters="no">
-		   <classpath>
-		   	<path refid="compile.classpath"/>
-		   	<pathelement location="${classes.dir}"/>
-		   </classpath>
-			<formatter type="brief" usefile="false" />
-			<batchtest>
-				<fileset dir="${test.dir}" includes="ChessTest.java" />
-			</batchtest>
-		</junit>
-	</target>	
+	
 
 </project>

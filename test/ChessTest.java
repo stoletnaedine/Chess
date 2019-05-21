@@ -51,7 +51,7 @@ public class ChessTest {
         Point nextPoint = new Point(2, 1);
         int startStepValue = 0;
         int expectedStepValue = 1;
-        Chess.pointsWithValues[0][0] = startStepValue;
+        Chess.setPointsWithValues(0, 0, startStepValue);
         Chess.incrementStep(startPoint, 0);
         assertEquals(expectedStepValue, Chess.getPointValue(nextPoint));
     }
@@ -78,20 +78,14 @@ public class ChessTest {
     public void testGetPointValue() {
         Point point = new Point(0, 0);
         int currentValue = 5;
-        Chess.pointsWithValues[(int) point.getX()][(int) point.getY()] = currentValue;
+        Chess.getPointsWithValues()[(int) point.getX()][(int) point.getY()] = currentValue;
         assertEquals(currentValue, Chess.getPointValue(point));
     }
 
     @Test
     public void testIsOccupiedIfTrue() {
         Point point = new Point(5, 5);
-        Chess.occupiedPoints.add(point);
-        assertTrue(Chess.isOccupied(point));
-    }
-
-    @Test
-    public void testIsOccupiedIfFalse() {
-        Point point = new Point(5, 5);
+        Chess.setOccupiedPoints(point);
         assertTrue(Chess.isOccupied(point));
     }
 
