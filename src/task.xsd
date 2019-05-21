@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:simpleType name="position_type">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[a-hA-H][1-8]" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="task">
+        <xs:complexType>
+            <xs:all>
+                <xs:element name="start" type="position_type" />
+                <xs:element name="finish" type="position_type" />
+            </xs:all>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

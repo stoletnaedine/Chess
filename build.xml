@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Нахождение минимального количества ходов коня" default="package">
+	<property name="source.dir" value="${basedir}/src" />
+	<property name="classes.dir" value="${basedir}/bin" />
+	<property name="target.dir" value="${basedir}/target" />
+	<property name="lib.dir" value="${basedir}/lib" />
+	<property name="test.dir" value="${basedir}/test" />
+	<property name="jar.name" value="chess.jar" />
+
+	<path id="compile.classpath">
+		<fileset dir="${lib.dir}">
+			<include name="log4j-api-2.11.2.jar"/>
+			<include name="log4j-core-2.11.2.jar"/>
+			<include name="junit-4.13-beta-3.jar"/>
+			<include name="hamcrest-core-1.3.jar"/>
+			<include name="dom4j-2.1.1.jar"/>
+		</fileset>
+	</path>
+	
+	<target name="init" depends="clean">
+		<mkdir dir="${classes.dir}"/>
+		<mkdir dir="${target.dir}"/>
+	</target>
+
+	<target name="compile" depends="init">
+		<javac includeantruntime="false" srcdir="${source.dir}" destdir="${classes.dir}" source="1.8" target="1.8" encoding="utf-8">
+			<classpath refid="compile.classpath" />
+		</javac>
+		<javac includeantruntime="false" srcdir="${test.dir}" destdir="${classes.dir}" source="1.8" target="1.8" encoding="utf-8">
+			<classpath refid="compile.classpath" />
+		</javac>
+	</target>
+	
+	<target name="clean">
+			<delete dir="${classes.dir}"/>
+			<delete dir="${target.dir}"/>
+		</target>
+
+	<target name="package" depends="test">
+		<jar destfile="${target.dir}/${jar.name}" basedir="${classes.dir}">
+			<zipgroupfileset dir="${lib.dir}">
+				<include name="log4j-api-2.11.2.jar"/>
+				<include name="log4j-core-2.11.2.jar"/>
+				<include name="dom4j-2.1.1.jar"/>
+			</zipgroupfileset>
+			<fileset dir="${source.dir}">
+				<include name="log4j2.properties"/>
+				<include name="task.xsd"/>
+			</fileset>
+			<manifest>
+				<attribute name="Main-Class" value="Chess" />
+			</manifest>
+		</jar>
+	</target>
+	
+	<target name="run-via-fat-jar">
+	    <java jar="${target.dir}/${jar.name}" fork="true">  
+	        <arg value="a3"/>
+	    	<arg value="h8"/>
+	    </java>                  
+	</target>
+	
+	<target name="test" depends="compile">
+		<junit printsummary="on" haltonfailure="yes" fork="true" outputtoformatters="no">
+		   <classpath>
+		   	<path refid="compile.classpath"/>
+		   	<pathelement location="${classes.dir}"/>
+		   </classpath>
+			<formatter type="brief" usefile="false" />
+			<batchtest>
+				<fileset dir="${test.dir}" includes="ChessTest.java" />
+			</batchtest>
+		</junit>
+	</target>	
+
+</project>
