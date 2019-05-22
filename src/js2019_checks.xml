@@ -40,6 +40,7 @@
     -->
 
     <property name="fileExtensions" value="java, properties, xml"/>
+    <property name="charset" value="utf-8"/>
 
     <!-- Excludes all 'module-info.java' files              -->
     <!-- See https://checkstyle.org/config_filefilters.html -->

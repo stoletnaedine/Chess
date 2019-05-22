@@ -8,34 +8,34 @@ import org.junit.Test;
 
 public class ChessTest {
 
+    // String[] temp = {"a3", "z3", "--show-path"};
+    // String[] temp4 = {"a2", "a9"};
+    // String[] temp1 = {"--show-path", "a1", "a7"};
+    // String[] temp2 = {"--task", "from-a1-to-b1.xml", "--show-path"};
+    // String[] temp3 = {"--show-path", "from-a1-to-b1.xml", "--task"};
+
     @Test
-    public void testIsValidArgsWithValidPoints() {
-        String[] validArgs = {"a1", "h8"};
-        assertTrue(Chess.isValidArgs(validArgs));
+    public void testIsValidArgIfTrue() {
+        String validArg = "a1";
+        assertTrue(Chess.isValidArg(validArg));
     }
 
     @Test
-    public void testIsValidArgsWithInvalidPoints() {
-        String[] invalidArgs = {"k1", "x8"};
-        assertFalse(Chess.isValidArgs(invalidArgs));
+    public void testIsValidArgZ1() {
+        String invalidArg = "z1";
+        assertFalse(Chess.isValidArg(invalidArg));
     }
 
     @Test
-    public void testIsValidArgsWithInvalidLength() {
-        String[] invalidArgs = {"a01", "b08"};
-        assertFalse(Chess.isValidArgs(invalidArgs));
+    public void testIsValidArgA0() {
+        String invalidArg = "a0";
+        assertFalse(Chess.isValidArg(invalidArg));
     }
 
     @Test
-    public void testIsValidArgsWithOneArg() {
-        String[] invalidArgs = {"a1"};
-        assertFalse(Chess.isValidArgs(invalidArgs));
-    }
-
-    @Test
-    public void testIsValidArgsWithNoArgs() {
-        String[] nullArgs = {null};
-        assertFalse(Chess.isValidArgs(nullArgs));
+    public void testIsValidArgD10() {
+        String invalidArg = "d10";
+        assertFalse(Chess.isValidArg(invalidArg));
     }
 
     @Test
@@ -62,7 +62,7 @@ public class ChessTest {
         Point startPoint = new Point(0, 0);
         Point endPoint = new Point(0, 0);
         int expectedCounts = 0;
-        assertEquals(expectedCounts, chess.countMoves(startPoint, endPoint));
+        assertEquals(expectedCounts, Chess.countMoves(startPoint, endPoint));
     }
 
     @Test
@@ -71,7 +71,7 @@ public class ChessTest {
         Point startPoint = new Point(0, 0);
         Point endPoint = new Point(7, 7);
         int expectedMoves = 6;
-        assertEquals(expectedMoves, chess.countMoves(startPoint, endPoint));
+        assertEquals(expectedMoves, Chess.countMoves(startPoint, endPoint));
     }
 
     @Test
@@ -162,6 +162,13 @@ public class ChessTest {
         String coordinate = "z3";
         Point expectedPoint = new Point(-1, 2);
         assertEquals(expectedPoint, Chess.convertArgToPoint(coordinate));
+    }
+
+    @Test
+    public void testConvertPointToChessCoordinate() {
+        Point point = new Point(2, 2);
+        String expectedString = "c3";
+        assertEquals(expectedString, Chess.convertPointToChessCoordinate(point));
     }
 
 }
