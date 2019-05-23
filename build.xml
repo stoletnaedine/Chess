@@ -79,7 +79,8 @@
 	<target name="run">
 	    <java jar="${target.dir}/${jar.name}" fork="true">  
 	        <arg value="a1"/>
-	    	<arg value="h8"/>
+	    	<arg value="h7"/>
+	    	<arg value="--show-path"/>
 	    </java>                  
 	</target>
 	

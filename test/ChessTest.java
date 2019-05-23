@@ -47,46 +47,49 @@ public class ChessTest {
 
     @Test
     public void testIncrementStep() {
+        Field field = new Field();
         Point startPoint = new Point(0, 0);
         Point nextPoint = new Point(2, 1);
         int startStepValue = 0;
         int expectedStepValue = 1;
-        Chess.setPointsWithValues(0, 0, startStepValue);
-        Chess.incrementStep(startPoint, 0);
-        assertEquals(expectedStepValue, Chess.getPointValue(nextPoint));
+        field.setPointsWithValues(0, 0, startStepValue);
+        Chess.incrementStep(startPoint, 0, field);
+        assertEquals(expectedStepValue, field.getPointValue(nextPoint));
     }
 
     @Test
     public void testCountMovesFromA1ToA1() {
-        Chess chess = new Chess();
+        Field field = new Field();
         Point startPoint = new Point(0, 0);
         Point endPoint = new Point(0, 0);
         int expectedCounts = 0;
-        assertEquals(expectedCounts, Chess.countMoves(startPoint, endPoint));
+        assertEquals(expectedCounts, Chess.countMoves(startPoint, endPoint, field));
     }
 
     @Test
     public void testCountMovesFromA1ToH8() {
-        Chess chess = new Chess();
+        Field field = new Field();
         Point startPoint = new Point(0, 0);
         Point endPoint = new Point(7, 7);
         int expectedMoves = 6;
-        assertEquals(expectedMoves, Chess.countMoves(startPoint, endPoint));
+        assertEquals(expectedMoves, Chess.countMoves(startPoint, endPoint, field));
     }
 
     @Test
     public void testGetPointValue() {
+        Field field = new Field();
         Point point = new Point(0, 0);
         int currentValue = 5;
-        Chess.getPointsWithValues()[(int) point.getX()][(int) point.getY()] = currentValue;
-        assertEquals(currentValue, Chess.getPointValue(point));
+        field.getPointsWithValues()[(int) point.getX()][(int) point.getY()] = currentValue;
+        assertEquals(currentValue, field.getPointValue(point));
     }
 
     @Test
     public void testIsOccupiedIfTrue() {
+        Field field = new Field();
         Point point = new Point(5, 5);
-        Chess.setOccupiedPoints(point);
-        assertTrue(Chess.isOccupied(point));
+        field.setOccupiedPoints(point);
+        assertTrue(Field.isOccupied(point));
     }
 
     @Test
@@ -105,70 +108,70 @@ public class ChessTest {
     public void testConvertArgToPointA1() {
         String coordinate = "a1";
         Point expectedPoint = new Point(0, 0);
-        assertEquals(expectedPoint, Chess.convertArgToPoint(coordinate));
+        assertEquals(expectedPoint, Converter.convertArgToPoint(coordinate));
     }
 
     @Test
     public void testConvertArgToPointB1() {
         String coordinate = "b1";
         Point expectedPoint = new Point(1, 0);
-        assertEquals(expectedPoint, Chess.convertArgToPoint(coordinate));
+        assertEquals(expectedPoint, Converter.convertArgToPoint(coordinate));
     }
 
     @Test
     public void testConvertArgToPointC2() {
         String coordinate = "c2";
         Point expectedPoint = new Point(2, 1);
-        assertEquals(expectedPoint, Chess.convertArgToPoint(coordinate));
+        assertEquals(expectedPoint, Converter.convertArgToPoint(coordinate));
     }
 
     @Test
     public void testConvertArgToPointD3() {
         String coordinate = "d3";
         Point expectedPoint = new Point(3, 2);
-        assertEquals(expectedPoint, Chess.convertArgToPoint(coordinate));
+        assertEquals(expectedPoint, Converter.convertArgToPoint(coordinate));
     }
 
     @Test
     public void testConvertArgToPointE2() {
         String coordinate = "e2";
         Point expectedPoint = new Point(4, 1);
-        assertEquals(expectedPoint, Chess.convertArgToPoint(coordinate));
+        assertEquals(expectedPoint, Converter.convertArgToPoint(coordinate));
     }
 
     @Test
     public void testConvertArgToPointF5() {
         String coordinate = "f5";
         Point expectedPoint = new Point(5, 4);
-        assertEquals(expectedPoint, Chess.convertArgToPoint(coordinate));
+        assertEquals(expectedPoint, Converter.convertArgToPoint(coordinate));
     }
 
     @Test
     public void testConvertArgToPointG7() {
         String coordinate = "g7";
         Point expectedPoint = new Point(6, 6);
-        assertEquals(expectedPoint, Chess.convertArgToPoint(coordinate));
+        assertEquals(expectedPoint, Converter.convertArgToPoint(coordinate));
     }
 
     @Test
     public void testConvertArgToPointH3() {
         String coordinate = "h3";
         Point expectedPoint = new Point(7, 2);
-        assertEquals(expectedPoint, Chess.convertArgToPoint(coordinate));
+        assertEquals(expectedPoint, Converter.convertArgToPoint(coordinate));
     }
 
     @Test
     public void testConvertArgToPointX0() {
         String coordinate = "z3";
         Point expectedPoint = new Point(-1, 2);
-        assertEquals(expectedPoint, Chess.convertArgToPoint(coordinate));
+        assertEquals(expectedPoint, Converter.convertArgToPoint(coordinate));
     }
 
     @Test
     public void testConvertPointToChessCoordinate() {
         Point point = new Point(2, 2);
         String expectedString = "c3";
-        assertEquals(expectedString, Chess.convertPointToChessCoordinate(point));
+        assertEquals(expectedString, Converter.convertPointToChessCoordinate(point));
     }
 
 }
